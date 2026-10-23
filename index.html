@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- SEO Meta Tags -->
+    <title>Rashii Tools - Free Online Utilities, QR, PDF & Developer Tools Suite</title>
+    <meta name="description" content="All-in-one free online tool suite by Rashii Tools: QR code scanner & generator, barcode maker, image compressor, PDF to JPG, JPG to PDF converter, background remover, currency converter, and age calculator. Fast, secure, and zero-error browser utilities.">
+    <meta name="keywords" content="Rashii Tools, qr code scanner online, free qr code generator, online barcode generator, code128 barcode maker, image compressor online, reduce image size kb, pdf to jpg converter, convert pdf pages to images, jpg to pdf merger, remove background online, transparent background maker, live currency converter, exchange rate calculator, exact age calculator, date of birth calculator, free developer utility tools, web based utility suite, multi-utility web apps">
+    <meta name="robots" content="index, follow">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f5ff',
+                            100: '#e0ebff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    },
+                    boxShadow: {
+                        '3d-light': '0 20px 30px -10px rgba(0, 0, 0, 0.07), 0 10px 15px -5px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+                        'neon-blue': '0 0 20px rgba(59, 130, 246, 0.25)',
+                        'neon-purple': '0 0 20px rgba(168, 85, 247, 0.25)',
+                        'neon-pink': '0 0 20px rgba(236, 72, 153, 0.25)',
+                        'neon-emerald': '0 0 20px rgba(16, 185, 129, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator & Scanner -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <!-- JsBarcode Library for Barcode Generation -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Vanilla Tilt for 3D Cards -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <!-- Google Font: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .heading-font { font-family: 'Outfit', sans-serif; }
+
+        /* Modern 3D Glassmorphism Light Styles */
+        .glass-3d {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* 3D Button Effects */
+        .btn-3d {
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.12);
+        }
+        .btn-3d:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.12);
+        }
+
+        /* Animated Light Grid Background */
+        .bg-grid-pattern {
+            background-size: 30px 30px;
+            background-image: radial-gradient(circle, rgba(99, 102, 241, 0.12) 1px, transparent 1px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 99px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen bg-grid-pattern overflow-x-hidden">
+
+    <!-- Mobile Top Navigation Header -->
+    <header class="lg:hidden sticky top-0 z-40 glass-3d border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-neon-blue">
+                <i class="fa-solid fa-cube"></i>
+            </div>
+            <span class="font-bold text-lg heading-font bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Rashii Tools</span>
+        </div>
+        <button id="mobileMenuBtn" class="p-2.5 rounded-xl bg-slate-200/80 text-slate-700">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex min-h-screen relative">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="fixed lg:sticky top-0 inset-y-0 left-0 z-50 w-72 h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out glass-3d border-r border-slate-200 flex flex-col justify-between shadow-3d-light">
+            <div class="p-5 overflow-y-auto">
+                <!-- App Brand Logo -->
+                <div class="hidden lg:flex items-center space-x-3 mb-8 px-2">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-neon-blue transform hover:rotate-12 transition-transform">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-xl leading-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent heading-font">Rashii Tools</h1>
+                        <p class="text-xs text-slate-500 font-medium">9-in-1 Utility Suite</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="space-y-1.5" id="navLinks">
+                    <button data-target="dashboard" class="nav-item active w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-border-all w-5 text-center text-blue-500 text-lg"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button data-target="qr-scanner" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-qrcode w-5 text-center text-emerald-500 text-lg"></i>
+                        <span>QR Code Scanner</span>
+                    </button>
+                    <button data-target="qr-generator" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-square-poll-vertical w-5 text-center text-purple-500 text-lg"></i>
+                        <span>QR Code Generator</span>
+                    </button>
+                    <button data-target="barcode-generator" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-barcode w-5 text-center text-blue-500 text-lg"></i>
+                        <span>Barcode Generator</span>
+                    </button>
+                    <button data-target="img-compressor" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-file-image w-5 text-center text-amber-500 text-lg"></i>
+                        <span>Image Compressor</span>
+                    </button>
+                    <button data-target="pdf-to-jpg" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-file-pdf w-5 text-center text-rose-500 text-lg"></i>
+                        <span>PDF to JPG</span>
+                    </button>
+                    <button data-target="jpg-to-pdf" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-file-export w-5 text-center text-indigo-500 text-lg"></i>
+                        <span>JPG to PDF</span>
+                    </button>
+                    <button data-target="bg-remover" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-wand-magic-sparkles w-5 text-center text-pink-500 text-lg"></i>
+                        <span>Background Remover</span>
+                    </button>
+                    <button data-target="currency-converter" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-coins w-5 text-center text-cyan-500 text-lg"></i>
+                        <span>Currency Converter</span>
+                    </button>
+                    <button data-target="age-calculator" class="nav-item w-full flex items-center space-x-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+                        <i class="fa-solid fa-cake-candles w-5 text-center text-orange-500 text-lg"></i>
+                        <span>Age Calculator</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Footer Badge -->
+            <div class="p-4 border-t border-slate-200 text-center">
+                <span class="text-xs font-semibold text-slate-500">© Rashii Tools - Free & Secure</span>
+            </div>
+        </aside>
+
+        <!-- Mobile Drawer Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+        <!-- Main Workspace Area -->
+        <main class="flex-1 p-4 md:p-8 lg:p-10 max-w-7xl mx-auto w-full overflow-y-auto">
+
+            <!-- 0. DASHBOARD VIEW -->
+            <section id="dashboard" class="tool-section">
+                <div class="mb-8">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight heading-font bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent">
+                        Rashii Tools Suite
+                    </h2>
+                    <p class="text-slate-600 mt-2 text-sm md:text-base max-w-2xl">
+                        Select any tool below to perform client-side operations locally inside your browser with complete privacy and zero data uploads.
+                    </p>
+                </div>
+
+                <!-- 3D Card Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- QR Scanner -->
+                    <div onclick="switchTab('qr-scanner')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-emerald-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-neon-emerald group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">QR Code Scanner</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Scan QR codes live via camera feed or from uploaded image files.</p>
+                    </div>
+
+                    <!-- QR Generator -->
+                    <div onclick="switchTab('qr-generator')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-purple-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-neon-purple group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">QR Code Generator</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Generate downloadable, custom-styled high-res QR codes instantly.</p>
+                    </div>
+
+                    <!-- Barcode Generator -->
+                    <div onclick="switchTab('barcode-generator')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-blue-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-neon-blue group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-barcode"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">Barcode Generator</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Create CODE128, EAN, UPC, and CODE39 barcodes for product labels.</p>
+                    </div>
+
+                    <!-- Image Compressor -->
+                    <div onclick="switchTab('img-compressor')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-amber-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-file-image"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">Image Compressor</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Reduce JPEG, PNG, and WebP image sizes in real-time without losing quality.</p>
+                    </div>
+
+                    <!-- PDF to JPG -->
+                    <div onclick="switchTab('pdf-to-jpg')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-rose-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">PDF to JPG Converter</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Convert document pages into individual JPEG image downloads.</p>
+                    </div>
+
+                    <!-- JPG to PDF -->
+                    <div onclick="switchTab('jpg-to-pdf')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-indigo-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-file-export"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">JPG to PDF Converter</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Combine multiple photos into a single formatted PDF document.</p>
+                    </div>
+
+                    <!-- Background Remover -->
+                    <div onclick="switchTab('bg-remover')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-pink-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-neon-pink group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 text-pink-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">Background Remover</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Remove plain image backgrounds using adjustable threshold canvas processing.</p>
+                    </div>
+
+                    <!-- Currency Converter -->
+                    <div onclick="switchTab('currency-converter')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-cyan-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">Currency Converter</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Convert foreign exchange rates live across global currencies.</p>
+                    </div>
+
+                    <!-- Age Calculator -->
+                    <div onclick="switchTab('age-calculator')" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2" class="glass-3d hover:border-orange-500/50 p-6 rounded-2xl cursor-pointer transition-all duration-300 group shadow-3d-light border border-slate-200">
+                        <div class="w-14 h-14 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-inner">
+                            <i class="fa-solid fa-cake-candles"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-1 heading-font">Age Calculator</h3>
+                        <p class="text-xs md:text-sm text-slate-500">Calculate exact age in years, days, hours, and next birthday countdown.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 1. QR CODE SCANNER -->
+            <section id="qr-scanner" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-qrcode text-emerald-500"></i> QR Code Scanner
+                    </h2>
+                    <p class="text-slate-500 text-sm">Scan QR codes live via camera feed or image file uploads.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200">
+                        <div class="flex gap-2 mb-4 p-1 bg-slate-200/60 rounded-xl">
+                            <button id="cameraTabBtn" onclick="toggleScannerMode('camera')" class="flex-1 py-2 rounded-lg font-semibold text-sm bg-blue-600 text-white shadow-md">Live Camera</button>
+                            <button id="fileTabBtn" onclick="toggleScannerMode('file')" class="flex-1 py-2 rounded-lg font-semibold text-sm text-slate-600">Upload File</button>
+                        </div>
+
+                        <div id="cameraScanBox" class="relative rounded-2xl overflow-hidden bg-slate-900 aspect-video flex items-center justify-center border border-slate-800">
+                            <video id="scannerVideo" class="w-full h-full object-cover"></video>
+                            <canvas id="qrCanvas" class="hidden"></canvas>
+                            <div class="absolute inset-0 border-2 border-emerald-500/60 rounded-2xl m-8 pointer-events-none flex items-center justify-center">
+                                <div class="w-full border-t-2 border-emerald-500 animate-pulse shadow-neon-emerald"></div>
+                            </div>
+                        </div>
+
+                        <div id="fileScanBox" class="hidden">
+                            <label class="flex flex-col items-center justify-center h-56 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-emerald-500 transition-colors bg-slate-100/50">
+                                <i class="fa-solid fa-cloud-arrow-up text-4xl text-emerald-500 mb-2"></i>
+                                <span class="text-sm font-semibold">Drop or Browse Image File</span>
+                                <input type="file" id="qrFileInput" accept="image/*" class="hidden" onchange="scanQRFromFile(event)">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-lg mb-3 heading-font">Detected Payload</h3>
+                            <div id="qrResult" class="p-4 rounded-xl bg-slate-100 border border-slate-200 text-sm break-all min-h-[140px] flex items-center justify-center text-slate-400 italic">
+                                Ready to scan QR code...
+                            </div>
+                        </div>
+                        <div class="flex gap-3 mt-4">
+                            <button onclick="copyQRResult()" class="flex-1 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 font-semibold text-sm transition-colors btn-3d">
+                                <i class="fa-solid fa-copy mr-2"></i>Copy Text
+                            </button>
+                            <a id="qrResultLink" href="#" target="_blank" class="flex-1 text-center py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-colors pointer-events-none opacity-50 btn-3d">
+                                <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i>Open URL
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. QR CODE GENERATOR -->
+            <section id="qr-generator" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-square-poll-vertical text-purple-500"></i> QR Code Generator
+                    </h2>
+                    <p class="text-slate-500 text-sm">Generate customized QR codes for websites, WiFi, and plain text.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Text Content / URL</label>
+                            <input type="text" id="qrText" value="https://example.com" placeholder="Type text or paste URL..." class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm font-medium">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">Foreground Color</label>
+                                <input type="color" id="qrDarkColor" value="#000000" class="w-full h-11 rounded-xl cursor-pointer bg-slate-100 border-0 p-1">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">Background Color</label>
+                                <input type="color" id="qrLightColor" value="#ffffff" class="w-full h-11 rounded-xl cursor-pointer bg-slate-100 border-0 p-1">
+                            </div>
+                        </div>
+
+                        <button onclick="generateQRCode()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold transition-all btn-3d shadow-neon-purple">
+                            Generate QR Code
+                        </button>
+                    </div>
+
+                    <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 flex flex-col items-center justify-center">
+                        <div id="qrcode" class="bg-white p-4 rounded-2xl shadow-lg mb-4"></div>
+                        <button onclick="downloadQRCode()" class="w-full py-3 bg-slate-200 hover:bg-slate-300 rounded-xl font-semibold text-sm transition-colors btn-3d">
+                            <i class="fa-solid fa-download mr-2"></i>Download PNG
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. BARCODE GENERATOR -->
+            <section id="barcode-generator" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-barcode text-blue-500"></i> Barcode Generator
+                    </h2>
+                    <p class="text-slate-500 text-sm">Create standard barcodes (CODE128, EAN-13, UPC, CODE39) for labels.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Barcode Value</label>
+                            <input type="text" id="barcodeValue" value="123456789012" placeholder="Enter barcode text..." class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-medium" oninput="generateBarcode()">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">Barcode Format</label>
+                                <select id="barcodeFormat" class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 font-medium text-sm" onchange="generateBarcode()">
+                                    <option value="CODE128">CODE128 (Auto)</option>
+                                    <option value="EAN13">EAN-13 (13 Digits)</option>
+                                    <option value="UPC">UPC-A (12 Digits)</option>
+                                    <option value="CODE39">CODE39</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">Bar Color</label>
+                                <input type="color" id="barcodeColor" value="#000000" class="w-full h-11 rounded-xl cursor-pointer bg-slate-100 border-0 p-1" onchange="generateBarcode()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 flex flex-col items-center justify-center">
+                        <div class="bg-white p-4 rounded-2xl shadow-lg mb-4 w-full flex justify-center items-center overflow-x-auto">
+                            <svg id="barcodeSvg"></svg>
+                        </div>
+                        <button onclick="downloadBarcode()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all btn-3d shadow-neon-blue">
+                            <i class="fa-solid fa-download mr-2"></i>Download Barcode
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. IMAGE COMPRESSOR -->
+            <section id="img-compressor" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-file-image text-amber-500"></i> Image Compressor
+                    </h2>
+                    <p class="text-slate-500 text-sm">Optimize and compress your image size instantly.</p>
+                </div>
+
+                <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 space-y-6">
+                    <label class="flex flex-col items-center justify-center h-44 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-amber-500 transition-colors bg-slate-100/50">
+                        <i class="fa-solid fa-image text-4xl text-amber-500 mb-2"></i>
+                        <span class="text-sm font-semibold">Select JPEG, PNG, or WEBP Image</span>
+                        <input type="file" id="compressorInput" accept="image/*" class="hidden" onchange="loadCompressorImage(event)">
+                    </label>
+
+                    <div id="compressorControls" class="hidden space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">Quality Level: <span id="qualityVal" class="text-amber-500 font-bold">80</span>%</label>
+                                <input type="range" id="compressorQuality" min="10" max="100" value="80" class="w-full accent-amber-500" oninput="updateCompressorQuality(this.value)">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-1">Output Format</label>
+                                <select id="compressorFormat" class="w-full px-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 font-medium text-sm" onchange="processCompression()">
+                                    <option value="image/jpeg">JPEG</option>
+                                    <option value="image/webp">WEBP</option>
+                                    <option value="image/png">PNG</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="text-center p-4 rounded-xl bg-slate-100/80 border border-slate-200">
+                                <p class="text-xs font-bold uppercase text-slate-400 mb-2">Original (<span id="origSize" class="text-slate-800">0 KB</span>)</p>
+                                <img id="origImgPreview" class="max-h-56 mx-auto rounded-lg object-contain">
+                            </div>
+                            <div class="text-center p-4 rounded-xl bg-slate-100/80 border border-slate-200">
+                                <p class="text-xs font-bold uppercase text-amber-500 mb-2">Compressed (<span id="compressedSize" class="text-slate-800">0 KB</span>)</p>
+                                <img id="compressedImgPreview" class="max-h-56 mx-auto rounded-lg object-contain">
+                            </div>
+                        </div>
+
+                        <button onclick="downloadCompressedImage()" class="w-full py-3.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold transition-colors btn-3d">
+                            <i class="fa-solid fa-download mr-2"></i>Download Optimized Image
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. PDF TO JPG -->
+            <section id="pdf-to-jpg" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-file-pdf text-rose-500"></i> PDF to JPG Converter
+                    </h2>
+                    <p class="text-slate-500 text-sm">Extract PDF document pages into high quality images.</p>
+                </div>
+
+                <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 space-y-6">
+                    <label class="flex flex-col items-center justify-center h-44 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-rose-500 transition-colors bg-slate-100/50">
+                        <i class="fa-solid fa-file-pdf text-4xl text-rose-500 mb-2"></i>
+                        <span class="text-sm font-semibold">Choose PDF Document</span>
+                        <input type="file" id="pdfInput" accept="application/pdf" class="hidden" onchange="convertPdfToJpg(event)">
+                    </label>
+
+                    <div id="pdfPagesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+            </section>
+
+            <!-- 6. JPG TO PDF -->
+            <section id="jpg-to-pdf" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-file-export text-indigo-500"></i> JPG to PDF Converter
+                    </h2>
+                    <p class="text-slate-500 text-sm">Merge multiple images into a clean PDF document.</p>
+                </div>
+
+                <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 space-y-6">
+                    <label class="flex flex-col items-center justify-center h-44 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-indigo-500 transition-colors bg-slate-100/50">
+                        <i class="fa-solid fa-images text-4xl text-indigo-500 mb-2"></i>
+                        <span class="text-sm font-semibold">Select Multiple Images</span>
+                        <input type="file" id="imagesToPdfInput" accept="image/*" multiple class="hidden" onchange="handleImagePdfUpload(event)">
+                    </label>
+
+                    <div id="imagePdfPreviewGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+
+                    <div id="jpgToPdfActions" class="hidden">
+                        <button onclick="generatePdfFromImages()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all btn-3d">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>Export as PDF
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. BACKGROUND REMOVER -->
+            <section id="bg-remover" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-wand-magic-sparkles text-pink-500"></i> Background Remover
+                    </h2>
+                    <p class="text-slate-500 text-sm">Remove plain backgrounds from images via canvas threshold rendering.</p>
+                </div>
+
+                <div class="glass-3d p-6 rounded-2xl shadow-3d-light border border-slate-200 space-y-6">
+                    <label class="flex flex-col items-center justify-center h-44 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-pink-500 transition-colors bg-slate-100/50">
+                        <i class="fa-solid fa-image text-4xl text-pink-500 mb-2"></i>
+                        <span class="text-sm font-semibold">Select Photo File</span>
+                        <input type="file" id="bgRemoverInput" accept="image/*" class="hidden" onchange="loadBgRemoverImage(event)">
+                    </label>
+
+                    <div id="bgRemoverControls" class="hidden space-y-6">
+                        <div class="flex items-center gap-4">
+                            <label class="text-sm font-semibold min-w-max">Tolerance Threshold:</label>
+                            <input type="range" id="bgTolerance" min="1" max="100" value="30" class="w-full accent-pink-500" oninput="removeBackground()">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="text-center p-3 rounded-xl bg-slate-100 border border-slate-200">
+                                <p class="text-xs font-bold uppercase text-slate-400 mb-2">Original</p>
+                                <img id="bgOriginalImg" class="max-h-60 mx-auto rounded-lg">
+                            </div>
+                            <div class="text-center p-3 rounded-xl bg-slate-100 border border-slate-200">
+                                <p class="text-xs font-bold uppercase text-pink-500 mb-2">Transparent Output</p>
+                                <canvas id="bgResultCanvas" class="max-h-60 mx-auto rounded-lg border border-slate-300 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:12px_12px]"></canvas>
+                            </div>
+                        </div>
+
+                        <button onclick="downloadBgRemovedImage()" class="w-full py-3.5 bg-pink-600 hover:bg-pink-700 text-white rounded-xl font-bold transition-all btn-3d shadow-neon-pink">
+                            <i class="fa-solid fa-download mr-2"></i>Download Transparent PNG
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. CURRENCY CONVERTER -->
+            <section id="currency-converter" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-coins text-cyan-500"></i> Currency Converter
+                    </h2>
+                    <p class="text-slate-500 text-sm">Calculate live global foreign exchange rates.</p>
+                </div>
+
+                <div class="glass-3d p-6 md:p-8 rounded-2xl shadow-3d-light border border-slate-200 max-w-xl mx-auto space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Conversion Amount</label>
+                        <input type="number" id="currencyAmount" value="100" class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xl font-bold" oninput="convertCurrency()">
+                    </div>
+
+                    <div class="grid grid-cols-5 gap-2 items-center">
+                        <div class="col-span-2">
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-1">From</label>
+                            <select id="currencyFrom" class="w-full px-3 py-3 rounded-xl bg-slate-100 border border-slate-200 font-bold text-sm" onchange="convertCurrency()"></select>
+                        </div>
+
+                        <div class="flex justify-center pt-5">
+                            <button onclick="swapCurrencies()" class="p-3 rounded-full bg-slate-200 hover:bg-slate-300 transition-transform hover:rotate-180 btn-3d">
+                                <i class="fa-solid fa-arrow-right-arrow-left text-cyan-500"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-span-2">
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-1">To</label>
+                            <select id="currencyTo" class="w-full px-3 py-3 rounded-xl bg-slate-100 border border-slate-200 font-bold text-sm" onchange="convertCurrency()"></select>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-center">
+                        <p class="text-xs font-bold uppercase text-slate-400 mb-1">Converted Value</p>
+                        <p id="currencyResult" class="text-3xl md:text-4xl font-extrabold text-cyan-600 heading-font">---</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. AGE CALCULATOR -->
+            <section id="age-calculator" class="tool-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold heading-font flex items-center gap-3">
+                        <i class="fa-solid fa-cake-candles text-orange-500"></i> Age Calculator
+                    </h2>
+                    <p class="text-slate-500 text-sm">Calculate your exact age and see a breakdown of total time lived.</p>
+                </div>
+
+                <div class="glass-3d p-6 md:p-8 rounded-2xl shadow-3d-light border border-slate-200 max-w-xl mx-auto space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Select Date of Birth</label>
+                        <input type="date" id="birthDate" class="w-full px-4 py-3 rounded-xl bg-slate-100 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500 text-base font-semibold" onchange="calculateAge()">
+                    </div>
+
+                    <div id="ageResultsContainer" class="hidden space-y-4">
+                        <div class="grid grid-cols-3 gap-3 text-center">
+                            <div class="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                                <span id="ageYears" class="text-2xl md:text-3xl font-extrabold text-orange-600 block heading-font">0</span>
+                                <span class="text-xs font-semibold text-slate-400 uppercase">Years</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                                <span id="ageMonths" class="text-2xl md:text-3xl font-extrabold text-orange-600 block heading-font">0</span>
+                                <span class="text-xs font-semibold text-slate-400 uppercase">Months</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                                <span id="ageDays" class="text-2xl md:text-3xl font-extrabold text-orange-600 block heading-font">0</span>
+                                <span class="text-xs font-semibold text-slate-400 uppercase">Days</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-100/80 border border-slate-200 space-y-2 text-xs md:text-sm">
+                            <div class="flex justify-between py-1 border-b border-slate-200">
+                                <span class="text-slate-500 font-medium">Total Days Lived:</span>
+                                <span id="totalDaysLived" class="font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-200">
+                                <span class="text-slate-500 font-medium">Total Hours Lived:</span>
+                                <span id="totalHoursLived" class="font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between py-1">
+                                <span class="text-slate-500 font-medium">Next Birthday Countdown:</span>
+                                <span id="nextBirthdayDays" class="font-bold text-orange-600">0 Days left</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Application Scripting Logic -->
+    <script>
+        // Setup PDF.js Worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        // Mobile Menu Drawer Handler
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebarOverlay.classList.toggle('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // Tab Navigation Router
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.tool-section');
+
+        function switchTab(targetId) {
+            sections.forEach(sec => sec.classList.add('hidden'));
+            navItems.forEach(item => {
+                item.classList.remove('bg-blue-600', 'text-white', 'shadow-neon-blue');
+                item.classList.add('text-slate-600');
+            });
+
+            const activeSection = document.getElementById(targetId);
+            if (activeSection) activeSection.classList.remove('hidden');
+
+            const activeBtn = document.querySelector(`[data-target="${targetId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-neon-blue');
+                activeBtn.classList.remove('text-slate-600');
+            }
+
+            if (window.innerWidth < 1024) {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+            }
+
+            if (targetId !== 'qr-scanner' && scannerStream) {
+                stopCameraScanner();
+            }
+        }
+
+        navItems.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.dataset.target);
+            });
+        });
+
+        // ==========================================
+        // 1. QR SCANNER LOGIC
+        // ==========================================
+        let scannerStream = null;
+        let scannerAnimationId = null;
+
+        function toggleScannerMode(mode) {
+            const cameraBox = document.getElementById('cameraScanBox');
+            const fileBox = document.getElementById('fileScanBox');
+            const cameraBtn = document.getElementById('cameraTabBtn');
+            const fileBtn = document.getElementById('fileTabBtn');
+
+            if (mode === 'camera') {
+                cameraBox.classList.remove('hidden');
+                fileBox.classList.add('hidden');
+                cameraBtn.className = "flex-1 py-2 rounded-lg font-semibold text-sm bg-blue-600 text-white shadow-md";
+                fileBtn.className = "flex-1 py-2 rounded-lg font-semibold text-sm text-slate-600";
+                startCameraScanner();
+            } else {
+                cameraBox.classList.add('hidden');
+                fileBox.classList.remove('hidden');
+                fileBtn.className = "flex-1 py-2 rounded-lg font-semibold text-sm bg-blue-600 text-white shadow-md";
+                cameraBtn.className = "flex-1 py-2 rounded-lg font-semibold text-sm text-slate-600";
+                stopCameraScanner();
+            }
+        }
+
+        async function startCameraScanner() {
+            const video = document.getElementById('scannerVideo');
+            try {
+                scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = scannerStream;
+                video.setAttribute("playsinline", true);
+                video.play();
+                scannerAnimationId = requestAnimationFrame(scanVideoFrame);
+            } catch (err) {
+                document.getElementById('qrResult').innerText = "Camera access denied or unavailable.";
+            }
+        }
+
+        function stopCameraScanner() {
+            if (scannerStream) {
+                scannerStream.getTracks().forEach(track => track.stop());
+                scannerStream = null;
+            }
+            if (scannerAnimationId) cancelAnimationFrame(scannerAnimationId);
+        }
+
+        function scanVideoFrame() {
+            const video = document.getElementById('scannerVideo');
+            const canvas = document.getElementById('qrCanvas');
+            const ctx = canvas.getContext('2d');
+
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                if (code) displayQRResult(code.data);
+            }
+            scannerAnimationId = requestAnimationFrame(scanVideoFrame);
+        }
+
+        function scanQRFromFile(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                    if (code) displayQRResult(code.data);
+                    else displayQRResult("No QR code detected.");
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function displayQRResult(data) {
+            const resBox = document.getElementById('qrResult');
+            const resLink = document.getElementById('qrResultLink');
+            resBox.innerText = data;
+            resBox.classList.remove('italic', 'text-slate-400');
+
+            if (data.startsWith('http://') || data.startsWith('https://')) {
+                resLink.href = data;
+                resLink.classList.remove('pointer-events-none', 'opacity-50');
+            } else {
+                resLink.removeAttribute('href');
+                resLink.classList.add('pointer-events-none', 'opacity-50');
+            }
+        }
+
+        function copyQRResult() {
+            const text = document.getElementById('qrResult').innerText;
+            if (text && !text.includes("Ready to scan")) {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+            }
+        }
+
+        // ==========================================
+        // 2. QR GENERATOR LOGIC
+        // ==========================================
+        let qrInstance = null;
+
+        function generateQRCode() {
+            const text = document.getElementById('qrText').value;
+            const dark = document.getElementById('qrDarkColor').value;
+            const light = document.getElementById('qrLightColor').value;
+            const container = document.getElementById('qrcode');
+
+            container.innerHTML = "";
+            qrInstance = new QRCode(container, {
+                text: text || "https://example.com",
+                width: 180,
+                height: 180,
+                colorDark: dark,
+                colorLight: light,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function downloadQRCode() {
+            const img = document.querySelector('#qrcode img');
+            if (img) {
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = img.src;
+                link.click();
+            }
+        }
+
+        // ==========================================
+        // 3. BARCODE GENERATOR LOGIC
+        // ==========================================
+        function generateBarcode() {
+            const val = document.getElementById('barcodeValue').value || "123456789";
+            const format = document.getElementById('barcodeFormat').value;
+            const color = document.getElementById('barcodeColor').value;
+
+            try {
+                JsBarcode("#barcodeSvg", val, {
+                    format: format,
+                    lineColor: color,
+                    width: 2,
+                    height: 80,
+                    displayValue: true
+                });
+            } catch (err) {
+                console.log("Barcode formatting error");
+            }
+        }
+
+        function downloadBarcode() {
+            const svg = document.getElementById('barcodeSvg');
+            const serializer = new XMLSerializer();
+            let source = serializer.serializeToString(svg);
+
+            if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+                source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+            }
+
+            const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+            const svgUrl = URL.createObjectURL(svgBlob);
+            const downloadLink = document.createElement("a");
+            downloadLink.href = svgUrl;
+            downloadLink.download = "barcode.svg";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // ==========================================
+        // 4. IMAGE COMPRESSOR LOGIC
+        // ==========================================
+        let rawCompressorImage = null;
+
+        function loadCompressorImage(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            document.getElementById('origSize').innerText = (file.size / 1024).toFixed(1) + ' KB';
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                rawCompressorImage = new Image();
+                rawCompressorImage.onload = function() {
+                    document.getElementById('origImgPreview').src = evt.target.result;
+                    document.getElementById('compressorControls').classList.remove('hidden');
+                    processCompression();
+                };
+                rawCompressorImage.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateCompressorQuality(val) {
+            document.getElementById('qualityVal').innerText = val;
+            processCompression();
+        }
+
+        function processCompression() {
+            if (!rawCompressorImage) return;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = rawCompressorImage.width;
+            canvas.height = rawCompressorImage.height;
+            ctx.drawImage(rawCompressorImage, 0, 0);
+
+            const quality = document.getElementById('compressorQuality').value / 100;
+            const format = document.getElementById('compressorFormat').value;
+
+            const compressedDataUrl = canvas.toDataURL(format, quality);
+            const previewImg = document.getElementById('compressedImgPreview');
+            previewImg.src = compressedDataUrl;
+
+            const head = 'data:' + format + ';base64,';
+            const sizeInBytes = Math.round((compressedDataUrl.length - head.length) * 3 / 4);
+            document.getElementById('compressedSize').innerText = (sizeInBytes / 1024).toFixed(1) + ' KB';
+        }
+
+        function downloadCompressedImage() {
+            const previewImg = document.getElementById('compressedImgPreview');
+            if (previewImg.src) {
+                const link = document.createElement('a');
+                link.download = 'compressed-image';
+                link.href = previewImg.src;
+                link.click();
+            }
+        }
+
+        // ==========================================
+        // 5. PDF TO JPG LOGIC
+        // ==========================================
+        async function convertPdfToJpg(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const container = document.getElementById('pdfPagesContainer');
+            container.innerHTML = '<p class="text-slate-400 text-sm">Processing pages...</p>';
+
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
+                const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                container.innerHTML = '';
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+                    const imgData = canvas.toDataURL('image/jpeg');
+                    const card = document.createElement('div');
+                    card.className = "glass-3d p-3 rounded-xl border border-slate-200 space-y-2";
+                    card.innerHTML = `
+                        <img src="${imgData}" class="rounded-lg w-full object-contain max-h-48">
+                        <div class="flex justify-between items-center text-xs font-semibold">
+                            <span>Page ${i}</span>
+                            <a href="${imgData}" download="page-${i}.jpg" class="px-3 py-1 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors">Download</a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                }
+            };
+            fileReader.readAsArrayBuffer(file);
+        }
+
+        // ==========================================
+        // 6. JPG TO PDF LOGIC
+        // ==========================================
+        let pdfImages = [];
+
+        function handleImagePdfUpload(e) {
+            const files = Array.from(e.target.files);
+            if (!files.length) return;
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    pdfImages.push(evt.target.result);
+                    renderImagePdfPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderImagePdfPreviews() {
+            const grid = document.getElementById('imagePdfPreviewGrid');
+            const actions = document.getElementById('jpgToPdfActions');
+            grid.innerHTML = '';
+
+            pdfImages.forEach((src, idx) => {
+                const div = document.createElement('div');
+                div.className = "relative group rounded-xl overflow-hidden border border-slate-200 aspect-square bg-slate-100";
+                div.innerHTML = `
+                    <img src="${src}" class="w-full h-full object-cover">
+                    <button onclick="removePdfImage(${idx})" class="absolute top-2 right-2 p-1.5 bg-rose-600 text-white rounded-lg text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                grid.appendChild(div);
+            });
+
+            if (pdfImages.length > 0) actions.classList.remove('hidden');
+        }
+
+        function removePdfImage(idx) {
+            pdfImages.splice(idx, 1);
+            renderImagePdfPreviews();
+        }
+
+        function generatePdfFromImages() {
+            if (!pdfImages.length) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            pdfImages.forEach((imgData, index) => {
+                if (index > 0) doc.addPage();
+                doc.addImage(imgData, 'JPEG', 10, 10, 190, 0);
+            });
+
+            doc.save('converted-documents.pdf');
+        }
+
+        // ==========================================
+        // 7. BACKGROUND REMOVER LOGIC
+        // ==========================================
+        let rawBgImage = null;
+
+        function loadBgRemoverImage(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                rawBgImage = new Image();
+                rawBgImage.onload = function() {
+                    document.getElementById('bgOriginalImg').src = evt.target.result;
+                    document.getElementById('bgRemoverControls').classList.remove('hidden');
+                    removeBackground();
+                };
+                rawBgImage.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeBackground() {
+            if (!rawBgImage) return;
+
+            const canvas = document.getElementById('bgResultCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = rawBgImage.width;
+            canvas.height = rawBgImage.height;
+
+            ctx.drawImage(rawBgImage, 0, 0);
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
+
+            const r0 = data[0], g0 = data[1], b0 = data[2];
+            const tolerance = document.getElementById('bgTolerance').value * 2.55;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i], g = data[i + 1], b = data[i + 2];
+                const diff = Math.sqrt((r - r0) ** 2 + (g - g0) ** 2 + (b - b0) ** 2);
+                if (diff < tolerance) {
+                    data[i + 3] = 0;
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        function downloadBgRemovedImage() {
+            const canvas = document.getElementById('bgResultCanvas');
+            const link = document.createElement('a');
+            link.download = 'transparent-image.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // ==========================================
+        // 8. CURRENCY CONVERTER LOGIC
+        // ==========================================
+        const currencies = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "INR", "PKR", "CNY", "BRL"];
+        let exchangeRates = { USD: 1, EUR: 0.92, GBP: 0.78, JPY: 155.2, CAD: 1.36, AUD: 1.51, INR: 83.3, PKR: 278.5, CNY: 7.23, BRL: 5.15 };
+
+        function initCurrencyConverter() {
+            const fromSelect = document.getElementById('currencyFrom');
+            const toSelect = document.getElementById('currencyTo');
+
+            currencies.forEach(curr => {
+                fromSelect.add(new Option(curr, curr));
+                toSelect.add(new Option(curr, curr));
+            });
+
+            fromSelect.value = "USD";
+            toSelect.value = "PKR";
+
+            fetchRates();
+        }
+
+        async function fetchRates() {
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                const data = await res.json();
+                if (data && data.rates) exchangeRates = data.rates;
+            } catch (err) {
+                console.log("Using fallback currency rates");
+            }
+            convertCurrency();
+        }
+
+        function convertCurrency() {
+            const amt = parseFloat(document.getElementById('currencyAmount').value) || 0;
+            const from = document.getElementById('currencyFrom').value;
+            const to = document.getElementById('currencyTo').value;
+
+            const inUSD = amt / (exchangeRates[from] || 1);
+            const result = inUSD * (exchangeRates[to] || 1);
+
+            document.getElementById('currencyResult').innerText = `${result.toLocaleString(undefined, { maximumFractionDigits: 2 })} ${to}`;
+        }
+
+        function swapCurrencies() {
+            const from = document.getElementById('currencyFrom');
+            const to = document.getElementById('currencyTo');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convertCurrency();
+        }
+
+        // ==========================================
+        // 9. AGE CALCULATOR LOGIC
+        // ==========================================
+        function calculateAge() {
+            const birthInput = document.getElementById('birthDate').value;
+            if (!birthInput) return;
+
+            const dob = new Date(birthInput);
+            const now = new Date();
+
+            if (dob > now) return;
+
+            let years = now.getFullYear() - dob.getFullYear();
+            let months = now.getMonth() - dob.getMonth();
+            let days = now.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const totalDiffMs = now - dob;
+            const totalDays = Math.floor(totalDiffMs / (1000 * 60 * 60 * 24));
+            const totalHours = Math.floor(totalDiffMs / (1000 * 60 * 60));
+
+            // Next Birthday Countdown
+            let nextBday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+            if (now > nextBday) {
+                nextBday.setFullYear(now.getFullYear() + 1);
+            }
+            const daysToBday = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
+
+            document.getElementById('ageYears').innerText = years;
+            document.getElementById('ageMonths').innerText = months;
+            document.getElementById('ageDays').innerText = days;
+            document.getElementById('totalDaysLived').innerText = totalDays.toLocaleString();
+            document.getElementById('totalHoursLived').innerText = totalHours.toLocaleString();
+            document.getElementById('nextBirthdayDays').innerText = `${daysToBday} Days remaining`;
+
+            document.getElementById('ageResultsContainer').classList.remove('hidden');
+        }
+
+        // Initialize Suite
+        window.onload = function() {
+            switchTab('dashboard');
+            generateQRCode();
+            generateBarcode();
+            initCurrencyConverter();
+
+            // Set default date of birth for age calculator
+            const defaultDob = new Date();
+            defaultDob.setFullYear(defaultDob.getFullYear() - 25);
+            document.getElementById('birthDate').value = defaultDob.toISOString().split('T')[0];
+            calculateAge();
+
+            // Initialize VanillaTilt for 3D elements
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
+            }
+        };
+    </script>
+</body>
+</html>
